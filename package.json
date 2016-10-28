@@ -1,0 +1,25 @@
+{
+  "name": "auth0-angular2",
+  "version": "1.0.12",
+  "description": "Auth0 client library for Angular 2",
+  "main": "auth0-angular2.js",
+  "typings": "auth0-angular2.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepublish": "tsc"
+  },
+  "keywords": [
+    "Auth0",
+    "Angular2"
+  ],
+  "author": "Vince Xu <vxu@cimpress.com>",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@angular/core": "^2.0.2",
+    "@angular/http": "^2.0.2",
+    "rxjs": "^5.0.0-beta.12"
+  },
+  "dependencies": {
+    "angular2-jwt": "^0.1.23"
+  }
+}
