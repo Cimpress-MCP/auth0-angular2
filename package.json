@@ -8,12 +8,17 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepublish": "tsc"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Cimpress-MCP/auth0-angular2.git"
+  },
   "keywords": [
     "Auth0",
     "Angular2"
   ],
   "author": "Vince Xu <vxu@cimpress.com>",
   "license": "Apache-2.0",
+  "homepage": "https://github.com/Cimpress-MCP/auth0-angular2",
   "devDependencies": {
     "@angular/core": "^2.0.2",
     "@angular/http": "^2.0.2",
