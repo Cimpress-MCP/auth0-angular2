@@ -1,4 +1,5 @@
 import { Injectable, Provider } from '@angular/core';
+import { Router } from '@angular/router';
 import { tokenNotExpired } from 'angular2-jwt';
 
 const delayMilliseconds = 500; // Delay half of a second
@@ -12,10 +13,11 @@ export class AuthService {
     closable: false // Users are required to log in
   });
 
-  constructor(private clientId: string, private domain: string) {
+  constructor(private clientId: string, private domain: string, private router?: Router) {
     // Add callback for lock `authenticated` event
     this.lock.on("authenticated", (authResult) => {
       localStorage.setItem('id_token', authResult.idToken);
+      if(router) this.router.navigate(['/operation']);
     });
   }
 
@@ -59,3 +61,13 @@ export function provideAuthService(clientId: string, domain: string): Provider {
     useValue: new AuthService(clientId, domain)
   };
 }
+
+export function provideAuthServiceRoutingEnabled(clientId: string, domain: string): Provider {
+  return {
+    provide: AuthService,
+    deps: [Router],
+    useFactory: (router: Router) => {
+      return new AuthService(clientId, domain, router);
+    }
+  };
+};
