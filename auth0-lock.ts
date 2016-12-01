@@ -64,7 +64,7 @@ export class AuthService {
 export function provideAuthService(clientId: string, domain: string): Provider;
 export function provideAuthService(clientId: string, domain: string, homePath: string, redirectPath: string): Provider;
 export function provideAuthService(clientId: string, domain: string, homePath?: string, redirectPath?: string): Provider {
-  if(redirectPath == null){
+  if(homePath == null){
     return {
       provide: AuthService,
       useValue: new AuthService(clientId, domain)
