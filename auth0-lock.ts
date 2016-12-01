@@ -1,4 +1,5 @@
 import { Injectable, Provider } from '@angular/core';
+import { Router } from '@angular/router';
 import { tokenNotExpired } from 'angular2-jwt';
 
 const delayMilliseconds = 500; // Delay half of a second
@@ -9,13 +10,20 @@ declare var Auth0Lock: any;
 export class AuthService {
   // Configure Auth0
   lock = new Auth0Lock(this.clientId, this.domain, {
-    closable: false // Users are required to log in
+    closable: false, // Users are required to log in
+    auth: {
+      redirectUrl: (this.redirectPath == null ? location.origin : location.origin + this.redirectPath),
+      responseType: 'token'
+    }
   });
 
-  constructor(private clientId: string, private domain: string) {
+  constructor( clientId: string,  domain: string);
+  constructor( clientId: string,  domain: string, homePath: string, redirectPath: string, router: Router);
+  constructor(private clientId: string, private domain: string,private homePath?: string, private redirectPath?: string, private router?: Router) {
     // Add callback for lock `authenticated` event
     this.lock.on("authenticated", (authResult) => {
       localStorage.setItem('id_token', authResult.idToken);
+      if(router && homePath) this.router.navigate([homePath]);
     });
   }
 
@@ -53,9 +61,22 @@ export class AuthService {
   }
 }
 
-export function provideAuthService(clientId: string, domain: string): Provider {
-  return {
-    provide: AuthService,
-    useValue: new AuthService(clientId, domain)
-  };
+export function provideAuthService(clientId: string, domain: string): Provider;
+export function provideAuthService(clientId: string, domain: string, homePath: string, redirectPath: string): Provider;
+export function provideAuthService(clientId: string, domain: string, homePath?: string, redirectPath?: string): Provider {
+  if(redirectPath == null){
+    return {
+      provide: AuthService,
+      useValue: new AuthService(clientId, domain)
+    };
+  }
+  else {
+    return{
+      provide: AuthService,
+      deps: [Router],
+      useFactory: (router: Router) => {
+        return new AuthService(clientId, domain, homePath, redirectPath, router);
+      }
+    };
+  }
 }
