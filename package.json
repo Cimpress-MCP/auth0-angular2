@@ -1,6 +1,6 @@
 {
   "name": "auth0-angular2",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "description": "Auth0 client library for Angular 2",
   "main": "auth0-angular2.js",
   "typings": "auth0-angular2.d.ts",

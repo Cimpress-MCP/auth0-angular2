@@ -13,7 +13,8 @@ export class Auth0Http extends AuthHttp {
     http: Http)
   {
     super(new AuthConfig( {
-      tokenGetter: () => this.tokenGetter()
+      tokenGetter: () => this.tokenGetter(),
+      globalHeaders: [{'Content-Type':'application/json; charset=utf-8'}]
     }), http);
     
     this.tokenHttp = http;
